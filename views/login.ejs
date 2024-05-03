@@ -1,0 +1,13 @@
+<%- include('./partials/header')%>
+<%- include('./partials/nav')%>
+
+
+<form action="/login" method="post" class="w-[40%] mt-20 border border-gray-500 flex flex-col p-10 gap-5 m-auto rounded-3xl">
+    <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="text" placeholder="username" name="username">
+    <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="password" placeholder="*********" name="password">
+    <a class="text-red-400" href="/forgot">Forgot Password ?</a>
+    <button class="p-3 text-2xl rounded-2xl bg-gray-900 text-gray-100">Log In</button>
+    <p>Don't Have an Account? <a class="text-red-400" href="/register">Sign Up</a></p>
+</form>
+
+<%- include('./partials/footer')%>
