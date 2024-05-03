@@ -3,6 +3,11 @@ var router = express.Router();
 
 const User = require('../models/userSchema')
 
+const passport = require('passport')
+const localStrategy = require('passport-local')
+
+passport.use(new localStrategy(User.authenticate()))
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index')
@@ -14,8 +19,8 @@ router.get('/register',(req,res)=>{
 
 router.post('/register',async (req,res)=>{
   try{
-    const newUser = new User(req.body)
-    await newUser.save()
+    const {fullname, username, email, password} = req.body
+    await User.register({fullname,username,email},password)
     res.redirect('/login')
   }catch(err){
     res.send(err.message)
