@@ -31,8 +31,32 @@ router.get('/login',(req,res)=>{
   res.render('login')
 })
 
-router.get('/profile',(req,res)=>{
+router.post('/login',
+passport.authenticate('local',{
+  successRedirect:"/profile",
+  failureRedirect:'/login'
+})
+,(req,res,next)=>{
+
+})
+
+router.get('/profile',isLoggedIn,(req,res)=>{
   res.render('profile')
 })
 
+router.get('/logout',(req,res)=>{
+  req.logOut(()=>{
+    res.redirect('/login')
+  })
+})
+
+function isLoggedIn(req,res,next){
+  if(req.isAuthenticated()){
+    next()
+  }else{
+    res.redirect('/login')
+  }
+}
+
 module.exports = router;
+
