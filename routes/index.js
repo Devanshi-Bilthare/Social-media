@@ -41,7 +41,11 @@ passport.authenticate('local',{
 })
 
 router.get('/profile',isLoggedIn,(req,res)=>{
-  res.render('profile')
+  res.render('profile',{user:req.user})
+})
+
+router.get('/userUpdate/:id',(req,res)=>{
+  res.render('userUpdate',{user:req.user})
 })
 
 router.get('/logout',(req,res)=>{

@@ -1,0 +1,19 @@
+<%- include('./partials/header')%>
+
+<div class="w-[80vw] h-[80vh]  m-auto mt-[10vh] p-1 flex gap-[5%]">
+    <div class="flex flex-col p-10 jutify-center items-center w-[30%] gap-10 bg-slate-200 rounded-[50px]">
+        <div class="flex jutify-center items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1715089033372-f1c4856beef9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="w-16 h-16 rounded-full" alt="">
+            <h1 class="text-4xl">Hello</h1>
+        </div>
+        <a href="" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Reset Password</a>
+        <a href="/login" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Login Another Account</a>
+        <a href="" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Delete Account</a>
+        <a href="/logout" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Logout</a>
+    </div>
+    <form action="/userUpdate/<%= user._id%>" method="post" class="w-[65%] bg-slate-200 rounded-[50px]">
+        <input type="text">
+    </form>
+</div>
+
+<%- include('./partials/footer')%>
