@@ -19,8 +19,8 @@ router.get('/register',(req,res)=>{
 
 router.post('/register',async (req,res)=>{
   try{
-    const {fullname, username, email, password} = req.body
-    await User.register({fullname,username,email},password)
+    const {firstname,lastname, username, email, password} = req.body
+    await User.register({firstname,lastname,username,email},password)
     res.redirect('/login')
   }catch(err){
     res.send(err.message)

@@ -1,5 +1,6 @@
 <%- include('./partials/header')%>
 
+<a href="/profile" class="absolute top-5 start-10 text-3xl"><i class="ri-arrow-left-line"></i></a>
 <div class="w-[80vw] h-[80vh]  m-auto mt-[10vh] p-1 flex gap-[5%]">
     <div class="flex flex-col p-10 jutify-center items-center w-[30%] gap-10 bg-slate-200 rounded-[50px]">
         <div class="flex jutify-center items-center gap-3">
@@ -11,8 +12,24 @@
         <a href="" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Delete Account</a>
         <a href="/logout" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Logout</a>
     </div>
-    <form action="/userUpdate/<%= user._id%>" method="post" class="w-[65%] bg-slate-200 rounded-[50px]">
-        <input type="text">
+    <form action="/userUpdate/<%= user._id%>" method="post" class="w-[65%] flex flex-col justify-center items-center bg-slate-200 rounded-[50px] gap-10">
+       <div class="w-[70%] flex justify-between items-center">
+        <label for="firstname" class="text-xl">First  Name :</label>
+        <input type="text" name="firstname" value="<%= user.firstname%>"  id="firstname" class="p-2 text-2xl rounded-2xl w-[75%]">
+       </div>
+        <div class="w-[70%] flex justify-between items-center">
+            <label for="lastname" class="text-xl">Last  Name :</label>
+        <input type="text" name="lastname" value="<%= user.lastname%>" id="lastname" class="p-2 text-2xl rounded-2xl w-[75%]">
+        </div>
+        <div class="w-[70%] flex justify-between items-center">
+            <label for="username" class="text-xl">User  Name :</label>
+        <input type="text" name="username" value="<%= user.username%>" id="username" class="p-2 text-2xl rounded-2xl w-[75%]">
+        </div>
+        <div class="w-[70%] flex justify-between items-center">
+            <label for="email" class="text-xl">Email :</label>
+        <input type="text" name="email" value="<%=user.email%>" id="email" class="p-2 text-2xl rounded-2xl w-[75%]">
+        </div>
+        <button class="p-3 text-2xl rounded-2xl bg-gray-900 text-gray-100 w-[70%]">Edit Profile</button>
     </form>
 </div>
 

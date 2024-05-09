@@ -1,8 +1,9 @@
 <%- include('./partials/header')%>
 <%- include('./partials/nav')%>
 
-<form action="/register" method="post" class="w-[40%] mt-5 border border-gray-500 flex flex-col p-10 gap-5 m-auto rounded-3xl">
-    <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="text" placeholder="full name" name="fullname">
+<form action="/register" method="post" class="w-[40%] border border-gray-500 flex flex-col p-10 gap-5 m-auto rounded-3xl">
+    <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="text" placeholder="first name" name="firstname">
+    <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="text" placeholder="last name" name="lastname">
     <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="text" placeholder="username" name="username">
     <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="email" placeholder="example@gmail.com" name="email">
     <input class="p-5 text-2xl rounded-2xl border border-gray-500" type="password" placeholder="*******" name="password">

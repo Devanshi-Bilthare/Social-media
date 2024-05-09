@@ -2,11 +2,17 @@ const mongoose = require('mongoose')
 const plm = require('passport-local-mongoose')
 
 const userModel = new mongoose.Schema({
-    fullname:{
+    firstname:{
         type:String,
         trim:true,
         required: [true,"Name Is Required"],
-        minLength:[4,"Name must be atleast 4 characters long"]
+        minLength:[2,"Name must be atleast 4 characters long"]
+    },
+    lastname:{
+        type:String,
+        trim:true,
+        required: [true,"Name Is Required"],
+        minLength:[2,"Name must be atleast 4 characters long"]
     },
     username:{
         type:String,
