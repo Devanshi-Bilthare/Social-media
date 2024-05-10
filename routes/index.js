@@ -62,5 +62,21 @@ function isLoggedIn(req,res,next){
   }
 }
 
+router.get('/resetPassword/:id',(req,res)=>{
+  res.render('resetPassword',{user:req.user})
+})
+
+router.post('/resetPassword/:id',async(req,res)=>{
+  try{
+    await req.user.changePassword(req.body.oldpassword,req.body.newpassword)
+    req.user.save()
+    res.redirect(`/userUpdate/${req.user._id}`)
+  }catch(err){
+    res.send(err)
+  }
+})
+
+
+
 module.exports = router;
 
