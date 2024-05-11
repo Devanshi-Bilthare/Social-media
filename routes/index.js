@@ -48,6 +48,14 @@ router.get('/userUpdate/:id',(req,res)=>{
   res.render('userUpdate',{user:req.user})
 })
 
+router.post('/userUpdate/:id',async(req,res)=>{
+  try{
+    
+  }catch(err){
+    res.send(err)
+  }
+})
+
 router.get('/logout',(req,res)=>{
   req.logOut(()=>{
     res.redirect('/login')
