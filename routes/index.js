@@ -84,6 +84,39 @@ router.post('/resetPassword/:id',async(req,res)=>{
   }
 })
 
+router.get('/forgot-email',(req,res)=>{
+  res.render('forgotEmail',{user:req.user})
+})
+
+router.post('/forgot-email',async (req,res)=>{
+  try{
+    const user = await User.findOne({email:req.body.email})
+    if(user){
+      // res.send('csk')
+      res.redirect(`/forgot-password/${user._id}`)
+    }else{
+      res.redirect('/forgot-email')
+    }
+  }catch(err){
+    res.send(err)
+  }
+})
+
+router.get('/forgot-password/:id',(req,res)=>{
+  res.render('forgotPassword',{id :req.params.id})
+})
+
+
+router.post('/forgot-password/:id',async (req,res)=>{
+  try{
+    const user = await User.findById(req.params.id)
+    await user.setPassword(req.body.password)
+    await user.save()
+    res.redirect('/login')
+  }catch(err){
+    res.send(err)
+  }
+})
 
 
 module.exports = router;
