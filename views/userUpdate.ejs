@@ -9,7 +9,7 @@
         </div>
         <a href="/resetPassword/<%= user._id%>" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Reset Password</a>
         <a href="/login" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Login Another Account</a>
-        <a href="" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Delete Account</a>
+        <a href="/delete/<%= user._id%>" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Delete Account</a>
         <a href="/logout" class="text-xl bg-slate-100 w-[16vw] p-2 px-5 rounded-xl">Logout</a>
     </div>
     <form action="/userUpdate/<%= user._id%>" method="post" class="w-[65%] flex flex-col justify-center items-center bg-slate-200 rounded-[50px] gap-10">

@@ -50,7 +50,19 @@ router.get('/userUpdate/:id',(req,res)=>{
 
 router.post('/userUpdate/:id',async(req,res)=>{
   try{
-    
+    const {id} = req.params
+    await User.findByIdAndUpdate(id,req.body)
+    res.redirect('/profile')
+  }catch(err){
+    res.send(err)
+  }
+})
+
+router.get('/delete/:id',async(req,res)=>{
+  try{
+    const {id} = req.params;
+    await User.findByIdAndDelete(id)
+    res.redirect('/login')
   }catch(err){
     res.send(err)
   }
