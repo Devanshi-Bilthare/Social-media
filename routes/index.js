@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 const User = require('../models/userSchema')
+const upload= require('../utils/multer')
+
+const fs = require('fs')
+const path = require('path')
 
 const passport = require('passport')
 const localStrategy = require('passport-local')
@@ -53,6 +57,20 @@ router.post('/userUpdate/:id',async(req,res)=>{
     const {id} = req.params
     await User.findByIdAndUpdate(id,req.body)
     res.redirect('/profile')
+  }catch(err){
+    res.send(err)
+  }
+})
+
+router.post('/image/:id',isLoggedIn,upload,async (req,res)=>{
+  try{
+    const {id}= req.params
+    // if(req.file.filename !== "default.png"){
+    //   fs.unlinkSync(path.join(__dirname,'..','public','images',req.user.profilepic))
+    // }
+    req.user.profilepic = req.file.filename
+    await req.user.save()
+    res.redirect(`/userUpdate/${id}`)
   }catch(err){
     res.send(err)
   }

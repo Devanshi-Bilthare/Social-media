@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const plm = require('passport-local-mongoose')
 
 const userModel = new mongoose.Schema({
+     profilepic: {
+            type: String,
+            default:"default.png"
+     },
     firstname:{
         type:String,
         trim:true,
