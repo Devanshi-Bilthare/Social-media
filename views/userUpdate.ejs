@@ -6,7 +6,6 @@
         <div class="flex jutify-center items-center gap-3">
             <form class="hidden form-image" action="/image/<%= user._id%>" enctype="multipart/form-data" method="post">
                 <input class="input-image" type="file" name="profilepic">
-                
             </form>
             <img src="/images/<%= user.profilepic%>" class="preview-image w-16 h-16 rounded-full" alt="">
 

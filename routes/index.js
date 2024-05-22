@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-
-const User = require('../models/userSchema')
-const upload= require('../utils/multer')
-
 const fs = require('fs')
 const path = require('path')
+
+const upload= require('../utils/multer').single('profilepic')
+const User = require('../models/userSchema')
 
 const passport = require('passport')
 const localStrategy = require('passport-local')
@@ -65,21 +64,25 @@ router.post('/userUpdate/:id',async(req,res)=>{
 router.post('/image/:id',isLoggedIn,upload,async (req,res)=>{
   try{
     const {id}= req.params
-    // if(req.file.filename !== "default.png"){
-    //   fs.unlinkSync(path.join(__dirname,'..','public','images',req.user.profilepic))
-    // }
+    if(req.user.profilepic !== "default.png"){
+      fs.unlinkSync(path.join(__dirname,'..','public','images',req.user.profilepic))
+    }
     req.user.profilepic = req.file.filename
     await req.user.save()
     res.redirect(`/userUpdate/${id}`)
   }catch(err){
     res.send(err)
   }
+
 })
 
 router.get('/delete/:id',async(req,res)=>{
   try{
     const {id} = req.params;
-    await User.findByIdAndDelete(id)
+    const deletedUser = await User.findByIdAndDelete(id)
+    if(deletedUser.profilepic !== "default.png"){
+      fs.unlinkSync(path.join(__dirname,'..','public','images',deletedUser.profilepic))
+    }
     res.redirect('/login')
   }catch(err){
     res.send(err)
