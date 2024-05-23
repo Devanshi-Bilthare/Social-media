@@ -34,7 +34,11 @@ const userModel = new mongoose.Schema({
     },
     password:{
         type:String
-    }
+    },
+    resetPasswordToken: {
+        type: Number,
+        default: 0,
+    },
 },{timestamps:true})
 
 userModel.plugin(plm)

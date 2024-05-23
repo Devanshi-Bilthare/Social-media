@@ -6,6 +6,8 @@ const path = require('path')
 const upload= require('../utils/multer').single('profilepic')
 const User = require('../models/userSchema')
 
+const sendmail = require("../utils/mail");
+
 const passport = require('passport')
 const localStrategy = require('passport-local')
 
@@ -126,7 +128,8 @@ router.post('/forgot-email',async (req,res)=>{
     const user = await User.findOne({email:req.body.email})
     if(user){
       // res.send('csk')
-      res.redirect(`/forgot-password/${user._id}`)
+      sendmail(res, req.body.email, user);
+      // res.redirect(`/forgot-password/${user._id}`)
     }else{
       res.redirect('/forgot-email')
     }
@@ -143,8 +146,15 @@ router.get('/forgot-password/:id',(req,res)=>{
 router.post('/forgot-password/:id',async (req,res)=>{
   try{
     const user = await User.findById(req.params.id)
-    await user.setPassword(req.body.password)
-    await user.save()
+    // await user.setPassword(req.body.password)
+    // await user.save()
+    if (user.resetPasswordToken == 1) {
+      await user.setPassword(req.body.password);
+      user.resetPasswordToken = 0;
+      await user.save();
+  } else {
+      res.send("Link Expired Try Again!");
+  }
     res.redirect('/login')
   }catch(err){
     res.send(err)
