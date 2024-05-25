@@ -24,8 +24,6 @@ const sendmail = async (res, email, user) => {
 
         transport.sendMail(mailOptions, async (err, info) => {
             if (err) return res.send(err);
-            console.log(info);
-
             user.resetPasswordToken = 1;
             await user.save();
 
