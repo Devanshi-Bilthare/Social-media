@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 
 const sendmail = async (res, email, user) => {
     try {
-        const url = `http://localhost:3000/forget-password/${user._id}`;
+        const url = `http://localhost:3000/forgot-password/${user._id}`;
 
         const transport = nodemailer.createTransport({
             service: "gmail",

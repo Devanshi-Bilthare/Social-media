@@ -121,7 +121,7 @@ router.post('/resetPassword/:id',async(req,res)=>{
 
 router.get('/forgot-email',(req,res)=>{
   res.render('forgotEmail',{user:req.user})
-})
+})  
 
 router.post('/forgot-email',async (req,res)=>{
   try{
