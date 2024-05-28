@@ -162,5 +162,9 @@ router.post('/forgot-password/:id',async (req,res)=>{
 })
 
 
+router.get('/create-post',(req,res)=>{
+  res.render('createpost')
+})
+
 module.exports = router;
 
