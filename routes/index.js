@@ -3,8 +3,9 @@ var router = express.Router();
 const fs = require('fs')
 const path = require('path')
 
-const upload= require('../utils/multer').single('profilepic')
+const upload= require('../utils/multer')
 const User = require('../models/userSchema')
+const Post = require('../models/postSchema')
 
 const sendmail = require("../utils/mail");
 
@@ -45,9 +46,14 @@ passport.authenticate('local',{
 
 })
 
-router.get('/profile',isLoggedIn,(req,res)=>{
-  res.render('profile',{user:req.user})
-})
+router.get("/profile", isLoggedIn, async (req, res)=> {
+  try {
+      const posts = await Post.find().populate("user");
+      res.render("profile", { user: req.user, posts });
+  } catch (error) {
+      res.send(error);
+  }
+});
 
 router.get('/userUpdate/:id',(req,res)=>{
   res.render('userUpdate',{user:req.user})
@@ -63,7 +69,7 @@ router.post('/userUpdate/:id',async(req,res)=>{
   }
 })
 
-router.post('/image/:id',isLoggedIn,upload,async (req,res)=>{
+router.post('/image/:id',isLoggedIn,upload.single("profilepic"),async (req,res)=>{
   try{
     const {id}= req.params
     if(req.user.profilepic !== "default.png"){
@@ -160,6 +166,35 @@ router.post('/forgot-password/:id',async (req,res)=>{
     res.send(err)
   }
 })
+
+router.get("/post-create/", isLoggedIn, function (req, res, next) {
+  res.render("postcreate", { user: req.user });
+});
+
+router.post(
+  "/post-create/",
+  isLoggedIn,
+  upload.single("media"),
+  async function (req, res, next) {
+      try {
+          const newpost = new Post({
+              title: req.body.title,
+              media: req.file.filename,
+              user: req.user._id,
+          });
+
+          req.user.posts.push(newpost._id);
+
+          await newpost.save();
+          await req.user.save();
+
+          res.redirect("/profile");
+      } catch (error) {
+          res.send(err);
+      }
+  }
+);
+
 
 
 router.get('/create-post',(req,res)=>{
