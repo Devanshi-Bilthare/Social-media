@@ -39,21 +39,29 @@ router.get('/login',(req,res)=>{
 
 router.post('/login',
 passport.authenticate('local',{
-  successRedirect:"/profile",
+  successRedirect:"/feed",
   failureRedirect:'/login'
 })
 ,(req,res,next)=>{
 
 })
 
-router.get("/profile", isLoggedIn, async (req, res)=> {
+router.get("/feed", isLoggedIn, async (req, res)=> {
   try {
       const posts = await Post.find().populate("user");
-      res.render("profile", { user: req.user, posts });
+      res.render("feed", { user: req.user, posts });
   } catch (error) {
       res.send(error);
   }
 });
+
+router.get('/profile',isLoggedIn,async(req,res)=>{
+  try{
+    res.render("profile", { user: await req.user.populate("posts") });
+  }catch(err){
+    res.send(err)
+  }
+})
 
 router.get('/userUpdate/:id',(req,res)=>{
   res.render('userUpdate',{user:req.user})
@@ -63,7 +71,7 @@ router.post('/userUpdate/:id',async(req,res)=>{
   try{
     const {id} = req.params
     await User.findByIdAndUpdate(id,req.body)
-    res.redirect('/profile')
+    res.redirect('/feed')
   }catch(err){
     res.send(err)
   }
@@ -167,12 +175,10 @@ router.post('/forgot-password/:id',async (req,res)=>{
   }
 })
 
-router.get("/post-create/", isLoggedIn, function (req, res, next) {
-  res.render("postcreate", { user: req.user });
-});
+
 
 router.post(
-  "/post-create/",
+  "/create-post",
   isLoggedIn,
   upload.single("media"),
   async function (req, res, next) {
@@ -189,13 +195,36 @@ router.post(
           await req.user.save();
 
           res.redirect("/profile");
-      } catch (error) {
+      } catch (err) {
           res.send(err);
       }
   }
 );
 
+router.get('/delete-post/:id',async(req,res)=>{
+  try{
+    const deletedPost = await Post.findByIdAndDelete(req.params.id)
+    fs.unlinkSync(path.join(__dirname,'..','public','images',deletedPost.media))
+    res.redirect('/profile')
+  }catch(err){
+    res.send(err)
+  }
+})
 
+router.get("/like/:postid", isLoggedIn, async function (req, res, next) {
+  try {
+      const post = await Post.findById(req.params.postid);
+      if (post.likes.includes(req.user._id)) {
+          post.likes = post.likes.filter((uid) => uid != req.user.id);
+      } else {
+          post.likes.push(req.user._id);
+      }
+      await post.save();
+      res.redirect("/profile");
+  } catch (error) {
+      res.send(error);
+  }
+});
 
 router.get('/create-post',(req,res)=>{
   res.render('createpost')
