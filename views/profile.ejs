@@ -40,6 +40,13 @@
     </div>
     <% }) %>
 
+    
+
 </div>
+
+<%if(user.posts.length == 0){%>
+    <h2 class="text-center text-[300px] text-zinc-200 mt-[-100px]"><i class="ri-user-3-line"></i> </h2>
+    <h2 class="text-center text-3xl text-zinc-300 mt-[-50px]">You have no posts</h2>
+<%}%>
 
 <%- include('./partials/footer')%>

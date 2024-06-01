@@ -220,7 +220,7 @@ router.get("/like/:postid", isLoggedIn, async function (req, res, next) {
           post.likes.push(req.user._id);
       }
       await post.save();
-      res.redirect("/profile");
+      res.redirect("/feed");
   } catch (error) {
       res.send(error);
   }
