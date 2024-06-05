@@ -141,7 +141,6 @@ router.post('/forgot-email',async (req,res)=>{
   try{
     const user = await User.findOne({email:req.body.email})
     if(user){
-      // res.send('csk')
       sendmail(res, req.body.email, user);
       // res.redirect(`/forgot-password/${user._id}`)
     }else{
