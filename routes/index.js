@@ -99,6 +99,21 @@ router.get('/delete/:id',async(req,res)=>{
     if(deletedUser.profilepic !== "default.png"){
       fs.unlinkSync(path.join(__dirname,'..','public','images',deletedUser.profilepic))
     }
+
+    deletedUser.posts.forEach(async (postid) => {
+      const deletedpost = await Post.findByIdAndDelete(postid);
+      console.log(deletedpost);
+      fs.unlinkSync(
+          path.join(
+              __dirname,
+              "..",
+              "public",
+              "images",
+              deletedpost.media
+          )
+      );
+  });
+
     res.redirect('/login')
   }catch(err){
     res.send(err)
