@@ -1,15 +1,15 @@
 <%- include('./partials/header')%>
  
   <a href="/profile"><i class="ri-close-circle-fill absolute text-5xl right-[12%] top-[6vh] text-zinc-800"></i></a>
-  <form action="/create-post" method="post" enctype="multipart/form-data" class="w-[70vw] h-[80vh] bg-zinc-800 rounded-[50px] m-auto mt-[10vh] flex">
+  <form action="/update-post/<%= post._id%>" method="post" enctype="multipart/form-data" class="w-[70vw] h-[80vh] bg-zinc-800 rounded-[50px] m-auto mt-[10vh] flex">
   <div class="w-[50%] h-full" >
-    <input class="input-image hidden" type="file" name="media">
+    <input class="input-image hidden" type="file" name="media" value="/images/<%= post.media%>">
     <img class="w-[60%] m-auto mt-5" src="/images/default1.png" alt="">
     <p class="m-auto w-max p-2 bg-white rounded-xl mt-20 trigger-image">Select From Computer</p>
   </div>
   <div class="w-[45%]">
-    <textarea type="text" class="w-full h-[60%] bg-zinc-800 p-5 text-white border-2 mt-5 rounded-[20px]" name="title" placeholder="Write your Caption Here"></textarea>
-  <button class="m-auto w-full p-2 bg-white rounded-xl mt-10">Create Post</button>
+    <textarea type="text" class="w-full h-[60%] bg-zinc-800 p-5 text-white border-2 mt-5 rounded-[20px]" name="title" placeholder="Write your Caption Here"><%= post.title%></textarea>
+  <button class="m-auto w-full p-2 bg-white rounded-xl mt-10">Update Post</button>
   </div>
   </form>
 

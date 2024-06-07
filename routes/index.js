@@ -102,7 +102,6 @@ router.get('/delete/:id',async(req,res)=>{
 
     deletedUser.posts.forEach(async (postid) => {
       const deletedpost = await Post.findByIdAndDelete(postid);
-      console.log(deletedpost);
       fs.unlinkSync(
           path.join(
               __dirname,
@@ -243,6 +242,32 @@ router.get("/like/:postid", isLoggedIn, async function (req, res, next) {
 router.get('/create-post',(req,res)=>{
   res.render('createpost')
 })
+
+router.get('/update-post/:id',async(req,res)=>{
+ res.render('update-post',{post : await Post.findById(req.params.id)})
+})
+
+router.post("/update-post/:id",isLoggedIn,upload.single("media"),async(req, res,next)=> {
+      try {
+        const post = await Post.findById(req.params.id);
+        console.log("file name " +req.file.filename)
+        if(req.file.filename){
+          fs.unlinkSync(
+            path.join(__dirname, "..", "public", "images", post.media)
+        )
+        post.media = req.file.filename;
+        }
+
+        
+          post.title = req.body.title
+          await post.save();
+          res.redirect(`/profile`);
+      } catch (err) {
+          res.send(err);
+      }
+  }
+);
+
 
 module.exports = router;
 
